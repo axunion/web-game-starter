@@ -1,0 +1,101 @@
+:root {
+  --color-primary: #757575;
+  --color-primary-light: #a4a4a4;
+  --color-primary-dark: #494949;
+  --color-secondary: #bdbdbd;
+  --color-secondary-light: #efefef;
+  --color-secondary-dark: #8b8b8b;
+  --color-error: #f44336;
+  --color-background: #ffffff;
+  --color-text: #4d4d4d;
+  --color-text-primary: #212121;
+  --color-text-secondary: #757575;
+  --color-divider: #bdbdbd;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: #616161;
+    --color-primary-light: #8e8e8e;
+    --color-primary-dark: #373737;
+    --color-secondary: #4b4b4b;
+    --color-secondary-light: #757575;
+    --color-secondary-dark: #2c2c2c;
+    --color-error: #ff6659;
+    --color-background: #757575;
+    --color-text: #e0e0e0;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #bdbdbd;
+    --color-divider: #424242;
+  }
+}
+
+::selection {
+  background-color: var(--color-secondary);
+  color: var(--color-background);
+  text-shadow: none;
+}
+
+html {
+  background: var(--color-primary-dark);
+  color: var(--color-text);
+  color-scheme: light dark;
+  font:
+    16px/1.5 -apple-system,
+    BlinkMacSystemFont,
+    Roboto,
+    Helvetica,
+    "Noto Sans JP",
+    "Yu Gothic",
+    sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+h1 {
+  font-size: 120%;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+#viewport {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: 320px;
+  position: relative;
+  z-index: 0;
+}
+
+main {
+  background: var(--color-background);
+  flex: 1 0 auto;
+  padding: 20px;
+}
+
+header {
+  background: var(--color-primary);
+  padding: 1em 2em;
+  position: relative;
+}
+
+footer {
+  align-items: center;
+  background: var(--color-primary);
+  display: flex;
+  justify-content: center;
+  min-height: 50vh;
+  overflow: hidden;
+}
