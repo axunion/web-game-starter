@@ -3,10 +3,12 @@ export class Bricks {
   #Width = 75;
   #Height = 20;
   #Padding = 10;
+  #color = "#0095dd";
   #offsetTop = 30;
   #offsetLeft = 30;
   #columnCount = 5;
   #rowCount = 3;
+  #score = 0;
 
   constructor() {
     for (let c = 0; c < this.#columnCount; c++) {
@@ -30,7 +32,7 @@ export class Bricks {
 
           ctx.beginPath();
           ctx.rect(x, y, this.#Width, this.#Height);
-          ctx.fillStyle = "#0095DD";
+          ctx.fillStyle = this.#color;
           ctx.fill();
           ctx.closePath();
         }
@@ -51,7 +53,11 @@ export class Bricks {
             y < b.y + this.#Height
           ) {
             b.status = 0;
-            return true;
+            this.#score++;
+
+            if (this.#columnCount * this.#rowCount === this.#score) {
+              return true;
+            }
           }
         }
       }
