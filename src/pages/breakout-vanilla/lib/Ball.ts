@@ -1,19 +1,16 @@
 export class Ball {
   #canvas: HTMLCanvasElement;
-  #x: number;
-  #y: number;
-  #dx: number;
-  #dy: number;
-  #radius: number;
+  #x = 0;
+  #y = 0;
+  #dx = 0;
+  #dy = 0;
+  #radius = 10;
   #color = "#0095dd";
 
   constructor(canvas: HTMLCanvasElement) {
     this.#canvas = canvas;
-    this.#x = canvas.width / 2;
-    this.#y = canvas.height - 30;
-    this.#dx = canvas.width / 240;
-    this.#dy = -canvas.width / 240;
     this.#radius = 10;
+    this.init();
   }
 
   get x(): number {
@@ -22,6 +19,13 @@ export class Ball {
 
   get y(): number {
     return this.#y;
+  }
+
+  init(): void {
+    this.#x = this.#canvas.width / 2;
+    this.#y = this.#canvas.height - 30;
+    this.#dx = 2;
+    this.#dy = -2;
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
@@ -51,13 +55,6 @@ export class Ball {
     }
 
     return true;
-  }
-
-  reset(canvas: HTMLCanvasElement): void {
-    this.#x = canvas.width / 2;
-    this.#y = canvas.height - 30;
-    this.#dx = 2;
-    this.#dy = -2;
   }
 
   #isCollidingLeft(): boolean {

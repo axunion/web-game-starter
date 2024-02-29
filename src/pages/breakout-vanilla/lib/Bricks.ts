@@ -20,6 +20,10 @@ export class Bricks {
     }
   }
 
+  get score(): number {
+    return this.#score;
+  }
+
   draw(ctx: CanvasRenderingContext2D): void {
     for (let c = 0; c < this.#columnCount; c++) {
       for (let r = 0; r < this.#rowCount; r++) {
