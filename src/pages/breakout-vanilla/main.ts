@@ -1,5 +1,5 @@
 import "./style.css";
-import { Display } from "./lib/Display";
+import { Display } from "./service/Display";
 
 const canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
 const display = new Display(canvas);
