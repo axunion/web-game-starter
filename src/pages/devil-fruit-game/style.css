@@ -1,0 +1,39 @@
+:root {
+  --color-primary: #757575;
+  --color-secondary: #bdbdbd;
+  --color-error: #f44336;
+  --color-background: #ffffff;
+  --color-text: #4d4d4d;
+  --color-subtext: #757575;
+  --color-divider: #bdbdbd;
+}
+
+html {
+  background: var(--color-background);
+  color: var(--color-text);
+  color-scheme: light;
+  font:
+    16px/1.5 -apple-system,
+    BlinkMacSystemFont,
+    Roboto,
+    Helvetica,
+    "Noto Sans JP",
+    "Yu Gothic",
+    sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+.fruits-box {
+  margin: 100px auto;
+  height: 640px;
+  position: relative;
+  width: 400px;
+}
