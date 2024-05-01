@@ -1,8 +1,11 @@
 import { Bodies, Composite, Engine, Events, Render, Runner } from "matter-js";
-
-const WIDTH = 400;
-const HEIGHT = 640;
-const WALL_T = 8;
+import { BOX_HEIGHT, BOX_MARGIN, BOX_WIDTH } from "../constants/config";
+import {
+  createDevilFruit,
+  createRandomDevilFruit,
+  getDevilFruitLevel,
+  isDevilFruit,
+} from "./devilFruit";
 
 export class DevilFruitGame {
   #fruitsBox: HTMLElement;
@@ -19,8 +22,8 @@ export class DevilFruitGame {
       element: fruitsBox,
       engine: this.#engine,
       options: {
-        width: WIDTH,
-        height: HEIGHT,
+        width: BOX_WIDTH,
+        height: BOX_HEIGHT,
       },
     });
 
@@ -39,42 +42,41 @@ export class DevilFruitGame {
 
   #createWall() {
     const ground = Bodies.rectangle(
-      WIDTH / 2,
-      HEIGHT - WALL_T / 2,
-      WIDTH,
-      WALL_T,
-      { isStatic: true, label: "ground" },
+      BOX_WIDTH / 2,
+      BOX_HEIGHT - BOX_MARGIN / 2,
+      BOX_WIDTH,
+      BOX_MARGIN,
+      { isStatic: true },
     );
 
-    const leftWall = Bodies.rectangle(WALL_T / 2, HEIGHT / 2, WALL_T, HEIGHT, {
-      isStatic: true,
-      label: "leftWall",
-    });
+    const leftWall = Bodies.rectangle(
+      BOX_MARGIN / 2,
+      BOX_HEIGHT / 2,
+      BOX_MARGIN,
+      BOX_HEIGHT,
+      { isStatic: true },
+    );
 
     const rightWall = Bodies.rectangle(
-      WIDTH - WALL_T / 2,
-      HEIGHT / 2,
-      WALL_T,
-      HEIGHT,
-      { isStatic: true, label: "rightWall" },
+      BOX_WIDTH - BOX_MARGIN / 2,
+      BOX_HEIGHT / 2,
+      BOX_MARGIN,
+      BOX_HEIGHT,
+      { isStatic: true },
     );
 
     Composite.add(this.#engine.world, [ground, leftWall, rightWall]);
   }
 
   #createFruit(event: MouseEvent) {
-    const { clientX, clientY } = event;
-    const { left, top } = this.#fruitsBox.getBoundingClientRect();
+    const { clientX } = event;
+    const { left } = this.#fruitsBox.getBoundingClientRect();
     const x = clientX - left;
-    const y = clientY - top;
+    const y = 0;
 
-    const fruit = Bodies.circle(x, y, 20, {
-      restitution: 0.8,
-      friction: 0.1,
-      label: "fruit_0",
-    });
+    const devilFruit = createRandomDevilFruit(x, y);
 
-    Composite.add(this.#engine.world, fruit);
+    Composite.add(this.#engine.world, devilFruit);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -82,18 +84,14 @@ export class DevilFruitGame {
     for (const pair of pairs) {
       const { bodyA, bodyB } = pair;
 
-      if (bodyA.label === bodyB.label && bodyA.label.startsWith("fruit_")) {
-        const currentLevel = parseInt(bodyA.label.substring(6));
-        const newLevel = currentLevel + 1;
+      if (bodyA.label === bodyB.label && isDevilFruit(bodyA.label)) {
+        const newLevel = getDevilFruitLevel(bodyA.label) + 1;
         const newX = (bodyA.position.x + bodyB.position.x) / 2;
         const newY = (bodyA.position.y + bodyB.position.y) / 2;
-        const newRadius = newLevel * 10 + 20;
-        const newBubble = Bodies.circle(newX, newY, newRadius, {
-          label: "fruit_" + newLevel,
-        });
+        const devilFruit = createDevilFruit(newX, newY, newLevel);
 
         Composite.remove(this.#engine.world, [bodyA, bodyB]);
-        Composite.add(this.#engine.world, [newBubble]);
+        Composite.add(this.#engine.world, [devilFruit]);
       }
     }
   }
