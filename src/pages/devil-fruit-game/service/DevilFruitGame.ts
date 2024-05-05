@@ -76,10 +76,11 @@ export class DevilFruitGame {
     const { left } = this.#fruitsBox.getBoundingClientRect();
     const x = clientX - left;
     const y = 0;
-
     const devilFruit = createRandomDevilFruit(x, y);
 
-    Composite.add(this.#engine.world, devilFruit);
+    if (devilFruit) {
+      Composite.add(this.#engine.world, [devilFruit]);
+    }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -94,7 +95,10 @@ export class DevilFruitGame {
         const devilFruit = createDevilFruit(newX, newY, newLevel);
 
         Composite.remove(this.#engine.world, [bodyA, bodyB]);
-        Composite.add(this.#engine.world, [devilFruit]);
+
+        if (devilFruit) {
+          Composite.add(this.#engine.world, [devilFruit]);
+        }
       }
     }
   }

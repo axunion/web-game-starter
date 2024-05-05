@@ -18,17 +18,25 @@ const definitions: DevilFruitDefinition[] = [
   { level: 6, label: "fruit_6", radius: 80, color: "#000000", texture: "" },
 ];
 
-export const createDevilFruit = (x: number, y: number, level: number): Body => {
-  const definition = definitions[level] || definitions[0];
+export const createDevilFruit = (
+  x: number,
+  y: number,
+  level: number,
+): Body | null => {
+  const definition = definitions[level];
 
-  return Bodies.circle(x, y, definition.radius, {
-    label: definition.label,
-    restitution: 0.5,
-    friction: 0.1,
-  });
+  if (definition) {
+    return Bodies.circle(x, y, definition.radius, {
+      label: definition.label,
+      restitution: 0.5,
+      friction: 0.1,
+    });
+  }
+
+  return null;
 };
 
-export const createRandomDevilFruit = (x: number, y: number): Body => {
+export const createRandomDevilFruit = (x: number, y: number): Body | null => {
   const level = Math.floor(Math.random() * definitions.length);
   return createDevilFruit(x, y, level);
 };
