@@ -24,11 +24,13 @@ export class DevilFruitGame {
   constructor(fruitsBox: HTMLElement) {
     this.#fruitsBox = fruitsBox;
     this.#engine = Engine.create({
-      positionIterations: 10,
-      velocityIterations: 8,
-      constraintIterations: 2,
+      positionIterations: 8,
+      velocityIterations: 6,
     });
-    this.#runner = Runner.create();
+    this.#runner = Runner.create({
+      isFixed: true,
+      delta: 1000 / 60,
+    });
     this.#render = Render.create({
       element: fruitsBox,
       engine: this.#engine,
