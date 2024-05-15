@@ -1,4 +1,12 @@
-import { Bodies, Composite, Engine, Events, Render, Runner } from "matter-js";
+import {
+  Bodies,
+  Composite,
+  Engine,
+  Events,
+  IEventCollision,
+  Render,
+  Runner,
+} from "matter-js";
 import { BOX_HEIGHT, BOX_MARGIN, BOX_WIDTH } from "../constants/config";
 import {
   createDevilFruit,
@@ -32,7 +40,6 @@ export class DevilFruitGame {
 
     Render.run(this.#render);
     Runner.run(this.#runner, this.#engine);
-
     Events.on(this.#engine, "collisionStart", this.#collision.bind(this));
   }
 
@@ -83,8 +90,9 @@ export class DevilFruitGame {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  #collision({ pairs }: { pairs: any[] }) {
+  #collision(event: IEventCollision<Engine>) {
+    const { pairs } = event;
+
     for (const pair of pairs) {
       const { bodyA, bodyB } = pair;
 
