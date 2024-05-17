@@ -37,6 +37,8 @@ export class DevilFruitGame {
       options: {
         width: BOX_WIDTH,
         height: BOX_HEIGHT,
+        wireframes: false,
+        background: "transparent",
       },
     });
 
@@ -53,12 +55,19 @@ export class DevilFruitGame {
   }
 
   #createWall() {
+    const options = {
+      isStatic: true,
+      render: {
+        fillStyle: "gray",
+      },
+    };
+
     const ground = Bodies.rectangle(
       BOX_WIDTH / 2,
       BOX_HEIGHT - BOX_MARGIN / 2,
       BOX_WIDTH,
       BOX_MARGIN,
-      { isStatic: true },
+      options,
     );
 
     const leftWall = Bodies.rectangle(
@@ -66,7 +75,7 @@ export class DevilFruitGame {
       BOX_HEIGHT / 2,
       BOX_MARGIN,
       BOX_HEIGHT,
-      { isStatic: true },
+      options,
     );
 
     const rightWall = Bodies.rectangle(
@@ -74,7 +83,7 @@ export class DevilFruitGame {
       BOX_HEIGHT / 2,
       BOX_MARGIN,
       BOX_HEIGHT,
-      { isStatic: true },
+      options,
     );
 
     Composite.add(this.#engine.world, [ground, leftWall, rightWall]);

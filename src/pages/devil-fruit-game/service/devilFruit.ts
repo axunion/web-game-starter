@@ -28,7 +28,8 @@ export const createDevilFruit = (
   if (definition) {
     return Bodies.circle(x, y, definition.radius, {
       label: definition.label,
-      restitution: 0.5,
+      density: 0.001,
+      restitution: 0.8,
       friction: 0.1,
     });
   }
