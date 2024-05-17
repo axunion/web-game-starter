@@ -1,5 +1,4 @@
 import {
-  Bodies,
   Composite,
   Engine,
   Events,
@@ -7,7 +6,8 @@ import {
   Render,
   Runner,
 } from "matter-js";
-import { BOX_HEIGHT, BOX_MARGIN, BOX_WIDTH } from "../constants/config";
+import { BOX_HEIGHT, BOX_WIDTH } from "../constants/config";
+import { ground, leftWall, rightWall } from "./layout";
 import {
   createDevilFruit,
   createRandomDevilFruit,
@@ -23,14 +23,13 @@ export class DevilFruitGame {
 
   constructor(fruitsBox: HTMLElement) {
     this.#fruitsBox = fruitsBox;
-    this.#engine = Engine.create({
-      positionIterations: 8,
-      velocityIterations: 6,
-    });
+    this.#engine = Engine.create();
+
     this.#runner = Runner.create({
       isFixed: true,
-      delta: 1000 / 60,
+      delta: 1000 / 90,
     });
+
     this.#render = Render.create({
       element: fruitsBox,
       engine: this.#engine,
@@ -47,46 +46,11 @@ export class DevilFruitGame {
     Events.on(this.#engine, "collisionStart", this.#collision.bind(this));
   }
 
-  init() {
+  start() {
     Composite.clear(this.#engine.world, false);
-    this.#createWall();
+    Composite.add(this.#engine.world, [ground, leftWall, rightWall]);
 
     this.#fruitsBox.addEventListener("click", this.#createFruit.bind(this));
-  }
-
-  #createWall() {
-    const options = {
-      isStatic: true,
-      render: {
-        fillStyle: "gray",
-      },
-    };
-
-    const ground = Bodies.rectangle(
-      BOX_WIDTH / 2,
-      BOX_HEIGHT - BOX_MARGIN / 2,
-      BOX_WIDTH,
-      BOX_MARGIN,
-      options,
-    );
-
-    const leftWall = Bodies.rectangle(
-      BOX_MARGIN / 2,
-      BOX_HEIGHT / 2,
-      BOX_MARGIN,
-      BOX_HEIGHT,
-      options,
-    );
-
-    const rightWall = Bodies.rectangle(
-      BOX_WIDTH - BOX_MARGIN / 2,
-      BOX_HEIGHT / 2,
-      BOX_MARGIN,
-      BOX_HEIGHT,
-      options,
-    );
-
-    Composite.add(this.#engine.world, [ground, leftWall, rightWall]);
   }
 
   #createFruit(event: MouseEvent) {
