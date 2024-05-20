@@ -9,7 +9,9 @@
 }
 
 html {
-  background: black;
+  background: #4a90e2;
+  background: url(image/background.webp) center / cover no-repeat;
+  /* background: linear-gradient(#b3cde0, #70c1b3, #4a90e2); */
   color-scheme: light;
   font:
     16px/1.5 -apple-system,
@@ -37,8 +39,6 @@ ul {
 }
 
 main {
-  background: #4a90e2;
-  background: linear-gradient(#b3cde0, #70c1b3, #4a90e2);
   display: flex;
   min-height: 100vh;
   min-width: 960px;
@@ -53,7 +53,7 @@ main {
 .fruits-container {
   border-color: #a06c30;
   border-style: solid;
-  border-width: 0 10px 10px 10px;
+  border-width: 0 5px 5px 5px;
   border-radius: 0 0 5px 5px;
   height: 640px;
   margin: auto;
@@ -65,6 +65,7 @@ main {
 .fruits-box {
   background: #4caf50;
   background: linear-gradient(#1b5e2080, #4caf5080, #cddc3980, #fff59d80);
+  backdrop-filter: blur(15px);
   bottom: -10px;
   height: 650px;
   left: -10px;
@@ -74,8 +75,11 @@ main {
 }
 
 .score-box {
-  background: #a06c30;
+  background: #a06c3080;
+  backdrop-filter: blur(15px);
+  border: #a06c30 solid 2px;
   border-radius: 20px;
+  color: white;
   height: 200px;
   position: absolute;
   left: 20px;
@@ -84,9 +88,12 @@ main {
 }
 
 .ranking-box {
-  background: #a06c30;
+  background: #a06c3080;
+  backdrop-filter: blur(15px);
+  border: #a06c30 solid 2px;
   border-radius: 20px;
   bottom: 0;
+  color: white;
   height: 400px;
   position: absolute;
   left: 20px;
@@ -110,6 +117,7 @@ main {
 .evolution-box {
   background: #4caf50;
   background: linear-gradient(#4caf5080, #1b5e2080);
+  backdrop-filter: blur(5px);
   border-radius: 20px;
   bottom: 0;
   box-sizing: border-box;
