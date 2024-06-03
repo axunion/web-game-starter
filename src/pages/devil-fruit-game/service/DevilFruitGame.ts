@@ -1,4 +1,5 @@
 import {
+  Body,
   Composite,
   Engine,
   Events,
@@ -20,15 +21,13 @@ export class DevilFruitGame {
   #engine: Engine;
   #render: Render;
   #runner: Runner;
+  #currentFruit: Body | null = null;
+  // #nextFruit: Body;
 
   constructor(fruitsBox: HTMLElement) {
     this.#fruitsBox = fruitsBox;
     this.#engine = Engine.create();
-
-    this.#runner = Runner.create({
-      isFixed: true,
-      delta: 1000 / 90,
-    });
+    this.#runner = Runner.create({ isFixed: true });
 
     this.#render = Render.create({
       element: fruitsBox,
@@ -50,18 +49,29 @@ export class DevilFruitGame {
     Composite.clear(this.#engine.world, false);
     Composite.add(this.#engine.world, [ground, leftWall, rightWall]);
 
-    this.#fruitsBox.addEventListener("click", this.#createFruit.bind(this));
+    this.#createFruit(BOX_WIDTH);
+
+    this.#fruitsBox.addEventListener("click", (event: MouseEvent) => {
+      if (this.#currentFruit) {
+        Body.setStatic(this.#currentFruit, false);
+      }
+
+      setTimeout(() => {
+        this.#createFruit(event.clientX);
+      }, 1000);
+    });
   }
 
-  #createFruit(event: MouseEvent) {
-    const { clientX } = event;
+  #createFruit(clientX: number) {
     const { left } = this.#fruitsBox.getBoundingClientRect();
     const x = clientX - left;
     const y = 0;
     const devilFruit = createRandomDevilFruit(x, y);
 
     if (devilFruit) {
+      Body.setStatic(devilFruit, true);
       Composite.add(this.#engine.world, [devilFruit]);
+      this.#currentFruit = devilFruit;
     }
   }
 

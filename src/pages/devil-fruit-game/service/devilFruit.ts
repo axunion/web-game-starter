@@ -8,6 +8,8 @@ type DevilFruitDefinition = {
   texture: string;
 };
 
+const creationLevel = 4;
+
 const definitions: DevilFruitDefinition[] = [
   { level: 0, label: "fruit_0", radius: 10, fillStyle: "#ff0000", texture: "" },
   { level: 1, label: "fruit_1", radius: 20, fillStyle: "#00ff00", texture: "" },
@@ -46,7 +48,7 @@ export const createDevilFruit = (
 };
 
 export const createRandomDevilFruit = (x: number, y: number): Body | null => {
-  const level = Math.floor(Math.random() * definitions.length);
+  const level = Math.floor(Math.random() * creationLevel);
   return createDevilFruit(x, y, level);
 };
 
