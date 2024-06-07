@@ -33,10 +33,11 @@ export class DevilFruitGame {
       element: fruitsBox,
       engine: this.#engine,
       options: {
+        background: "transparent",
         width: BOX_WIDTH,
         height: BOX_HEIGHT,
+        pixelRatio: window.devicePixelRatio,
         wireframes: false,
-        background: "transparent",
       },
     });
 

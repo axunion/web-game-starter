@@ -5,60 +5,92 @@ type DevilFruitDefinition = {
   label: string;
   radius: number;
   fillStyle: string;
-  texture: string;
+  texture: {
+    img: string;
+    width: number;
+    height: number;
+  };
 };
 
-const creationLevel = 4;
+const maxLevelOffset = 4;
 
 const definitions: DevilFruitDefinition[] = [
   {
     level: 0,
     label: "fruit_0",
-    radius: 10,
+    radius: 20,
     fillStyle: "#ff0000",
-    texture: "image/fruit/barabara.png",
+    texture: {
+      img: "image/fruit/barabara.png",
+      width: 160,
+      height: 160,
+    },
   },
   {
     level: 1,
     label: "fruit_1",
-    radius: 20,
+    radius: 30,
     fillStyle: "#00ff00",
-    texture: "image/fruit/utauta.png",
+    texture: {
+      img: "image/fruit/utauta.png",
+      width: 160,
+      height: 160,
+    },
   },
   {
     level: 2,
     label: "fruit_2",
-    radius: 30,
+    radius: 40,
     fillStyle: "#0000ff",
-    texture: "image/fruit/hanahana.png",
+    texture: {
+      img: "image/fruit/hanahana.png",
+      width: 160,
+      height: 160,
+    },
   },
   {
     level: 3,
     label: "fruit_3",
-    radius: 40,
+    radius: 50,
     fillStyle: "#ffff00",
-    texture: "image/fruit/gorogoro.png",
+    texture: {
+      img: "image/fruit/gorogoro.png",
+      width: 160,
+      height: 160,
+    },
   },
   {
     level: 4,
     label: "fruit_4",
-    radius: 50,
+    radius: 60,
     fillStyle: "#ff00ff",
-    texture: "image/fruit/meramera.png",
+    texture: {
+      img: "image/fruit/yamiyami.png",
+      width: 160,
+      height: 160,
+    },
   },
   {
     level: 5,
     label: "fruit_5",
-    radius: 60,
+    radius: 80,
     fillStyle: "#00ffff",
-    texture: "image/fruit/yamiyami.png",
+    texture: {
+      img: "image/fruit/meramera.png",
+      width: 160,
+      height: 160,
+    },
   },
   {
     level: 6,
     label: "fruit_6",
-    radius: 70,
+    radius: 100,
     fillStyle: "#ffffff",
-    texture: "image/fruit/gomugomu.png",
+    texture: {
+      img: "image/fruit/gomugomu.png",
+      width: 160,
+      height: 160,
+    },
   },
 ];
 
@@ -70,17 +102,20 @@ export const createDevilFruit = (
   const definition = definitions[level];
 
   if (definition) {
+    const scale = (definition.radius * 2) / 200;
+
     return Bodies.circle(x, y, definition.radius, {
       label: definition.label,
       density: 0.001,
+      frictionAir: 0.03,
       restitution: 0.5,
       friction: 0.1,
       render: {
-        // fillStyle: definition.fillStyle,
+        fillStyle: definition.fillStyle,
         sprite: {
-          texture: definition.texture,
-          xScale: (definition.radius * 2) / 100,
-          yScale: (definition.radius * 2) / 100,
+          texture: definition.texture.img,
+          xScale: scale,
+          yScale: scale,
         },
       },
     });
@@ -90,7 +125,7 @@ export const createDevilFruit = (
 };
 
 export const createRandomDevilFruit = (x: number, y: number): Body | null => {
-  const level = Math.floor(Math.random() * creationLevel);
+  const level = Math.floor(Math.random() * maxLevelOffset);
   return createDevilFruit(x, y, level);
 };
 
