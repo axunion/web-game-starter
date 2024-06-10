@@ -54,7 +54,7 @@ const definitions: DevilFruitDefinition[] = [
     radius: 50,
     fillStyle: "#ffff00",
     texture: {
-      img: "image/fruit/gorogoro.png",
+      img: "image/fruit/meromero.png",
       width: 160,
       height: 160,
     },
@@ -65,7 +65,7 @@ const definitions: DevilFruitDefinition[] = [
     radius: 60,
     fillStyle: "#ff00ff",
     texture: {
-      img: "image/fruit/yamiyami.png",
+      img: "image/fruit/gorogoro.png",
       width: 160,
       height: 160,
     },
