@@ -23,6 +23,7 @@ export class DevilFruitGame {
   #runner: Runner;
   #currentFruit: Body | null = null;
   // #nextFruit: Body;
+  #isFruitFalling = false;
 
   constructor(fruitsBox: HTMLElement) {
     this.#fruitsBox = fruitsBox;
@@ -50,22 +51,26 @@ export class DevilFruitGame {
     Composite.clear(this.#engine.world, false);
     Composite.add(this.#engine.world, [ground, leftWall, rightWall]);
 
-    this.#createFruit(BOX_WIDTH);
+    this.#createFruit();
 
-    this.#fruitsBox.addEventListener("click", (event: MouseEvent) => {
-      if (this.#currentFruit) {
-        Body.setStatic(this.#currentFruit, false);
+    this.#fruitsBox.addEventListener("click", () => {
+      if (this.#currentFruit === null || this.#isFruitFalling) {
+        return;
       }
 
+      Body.setStatic(this.#currentFruit, false);
+      this.#isFruitFalling = true;
+
       setTimeout(() => {
-        this.#createFruit(event.clientX);
+        this.#isFruitFalling = false;
+        this.#createFruit();
       }, 1000);
     });
   }
 
-  #createFruit(clientX: number) {
-    const { left } = this.#fruitsBox.getBoundingClientRect();
-    const x = clientX - left;
+  #createFruit() {
+    const { left, width } = this.#fruitsBox.getBoundingClientRect();
+    const x = left + width / 2;
     const y = 0;
     const devilFruit = createRandomDevilFruit(x, y);
 

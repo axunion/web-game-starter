@@ -103,6 +103,7 @@ export const createDevilFruit = (
 
   if (definition) {
     const scale = (definition.radius * 2) / 200;
+    y += definition.radius;
 
     return Bodies.circle(x, y, definition.radius, {
       label: definition.label,
